@@ -39,6 +39,15 @@ public class RoomManager : MonoBehaviour
                 break;
             }
         }
+        string scenename = PlayerPrefs.GetString("LastScene");
+        if (scenename == "BossStage")
+        {
+            SoundManager.soundManager.PlayBGM(BGMType.InBoss);
+        }
+        else
+        {
+            SoundManager.soundManager.PlayBGM(BGMType.InGame);
+        }
     }
 
     // Update is called once per frame
@@ -50,6 +59,15 @@ public class RoomManager : MonoBehaviour
     public static void ChangeScene(string scenename, int doornum)
     {
         doorNumber = doornum;
+        string nowScene = PlayerPrefs.GetString("LastScene");
+        if (nowScene != "")
+        {
+            SaveDataManager.SaveArrangeData(nowScene);
+        }
+        PlayerPrefs.SetString("LastScene",scenename);
+        PlayerPrefs.SetInt("LastDoor", doornum);
+        ItemKeeper.SaveItem();
+
         SceneManager.LoadScene(scenename);
     }
 }
