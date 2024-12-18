@@ -10,6 +10,7 @@ public class Switch : MonoBehaviour
     public SpriteRenderer SwitchRenderer;
     public Sprite SwitchOn;
     public Sprite SwitchOff;
+    private Switch switchscript;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,17 +22,25 @@ public class Switch : MonoBehaviour
     {
         
     }
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        isPushed = true;
-        onButton = true;
-        SwitchRenderer.sprite = SwitchOn;
+        if (other.CompareTag("Player")||other.CompareTag("Box")||other.CompareTag("Dummy")||other.CompareTag("Lasergun")||other.CompareTag("Damage"))
+        {
+            isPushed = true;
+            onButton = true;
+            SwitchRenderer.sprite = SwitchOn;
+        }
+        
         
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        onButton = false;
-        StartCoroutine(SwitchPushed(OpenTime));
+        if (other.CompareTag("Player")||other.CompareTag("Box")||other.CompareTag("Dummy")||other.CompareTag("Lasergun")||other.CompareTag("Damage"))
+        {
+            onButton = false;        
+            StartCoroutine(SwitchPushed(OpenTime)); 
+        }
+              
     }
     private IEnumerator SwitchPushed(float time)
     {

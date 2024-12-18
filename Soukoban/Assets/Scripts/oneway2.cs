@@ -6,11 +6,11 @@ public class oneway2 : MonoBehaviour
 {//Unityメモ、「Componentをスクリプトから操作」～「タグ」参照
     public onewayentry entry;
     public onewayexit exit;
-    private BoxCollider2D barrier;
+    private CompositeCollider2D barrier;
     // Start is called before the first frame update
     void Start()
     {
-        barrier = GetComponent<BoxCollider2D>();
+        barrier = GetComponent<CompositeCollider2D>();
         
     }
 
@@ -18,14 +18,14 @@ public class oneway2 : MonoBehaviour
     void Update()
     {
         //もし入口にプレイヤーがいたら
-        //if ()
+        if (entry.playerHere)
         {
-            //barrier.enabled = ????;
+            barrier.isTrigger = true;
         }
         //もし出口にプレイヤーがいたら
-        //if ()
+        if (exit.playerHere)
         {
-            //barrier.enabled = ????;
+            barrier.isTrigger = false;
         }
     }
     

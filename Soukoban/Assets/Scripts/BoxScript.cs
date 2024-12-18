@@ -8,6 +8,7 @@ public class BoxScript : MonoBehaviour
     float Moveduration = 0.2f;
     float Movechecktime = 0.15f;
     float InputStay = 1.0f;
+    float Modifytime = 0.22f;
     private Rigidbody2D rb2d;
     float speed = 5.0f;
     float merge = 0.1f;
@@ -15,6 +16,8 @@ public class BoxScript : MonoBehaviour
     public Sprite BoxGoalSprite;
     public SpriteRenderer BoxRenderer;
     public GameManager gameManager;
+    
+    
     //public OnewayboardScript oneway;
     bool isMoving = false;
 
@@ -22,6 +25,7 @@ public class BoxScript : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
@@ -34,7 +38,7 @@ public class BoxScript : MonoBehaviour
         Vector3 left = Distance - Vector3.left;
         Vector3 right = Distance - Vector3.right;
         InputStay += Time.deltaTime;
-        if (Distance.magnitude < 1.01f || isMoving == true)
+        if (Distance.magnitude < 1.3f || isMoving == true)
         {
             rb2d.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
             rb2d.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
@@ -66,6 +70,10 @@ public class BoxScript : MonoBehaviour
                 StartCoroutine(Move(Vector3.left));
                 InputStay = 0f;
             }
+        } 
+        if (InputStay >= Modifytime)
+        {
+            transform.position = new Vector3(Mathf.Round(transform.position.x),Mathf.Round(transform.position.y),transform.position.z);      
         }        
     }
 

@@ -8,6 +8,8 @@ public class SwitchDoor : MonoBehaviour
     private SpriteRenderer doorSprite;
     public Switch switchButton;
     public bool isBlocked = false;
+    float time = 1f;
+    float waitingTime = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,26 +23,30 @@ public class SwitchDoor : MonoBehaviour
     {
         if (isBlocked == false && switchButton.isPushed == false)
         {
-            door.isTrigger = false;
+            time += Time.deltaTime;
+        }
+        else
+        {
+            time = 0f;
+        }
+        if (time>=waitingTime)
+        {
+            door.enabled = true;
             doorSprite.enabled = true;
         }
         if (switchButton.isPushed == true)
         {
-            door.isTrigger = true;
+            door.enabled = false;
             doorSprite.enabled = false;            
         }
     }
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {        
         isBlocked = true;        
     }
     void OnTriggerExit2D(Collider2D other)
     {
         isBlocked = false;
-        if (switchButton.isPushed == false)
-        {
-            doorSprite.enabled = true;
-            door.isTrigger = true;
-        } 
+        
     }
 }
